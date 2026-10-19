@@ -9,39 +9,26 @@ class PaperUNet(nn.Module):
 
         # Input: 256 x 256 x 1
 
-        self.enc1_conv1 = nn.Conv2d(
-            1, 15, kernel_size=3, padding=1
-        )
+        self.enc1_conv1 = nn.Conv2d(1, 15, kernel_size=3, padding=1)
 
-        self.enc1_conv2 = nn.Conv2d(
-            15, 15, kernel_size=3, padding=1
-        )
+        self.enc1_conv2 = nn.Conv2d(15, 15, kernel_size=3, padding=1)
 
         self.pool1 = nn.MaxPool2d(2)
 
         # 128 x 128 x 15
+        
+        self.enc2_conv1 = nn.Conv2d(15, 30, kernel_size=3, padding=1)
 
-
-        self.enc2_conv1 = nn.Conv2d(
-            15, 30, kernel_size=3, padding=1
-        )
-
-        self.enc2_conv2 = nn.Conv2d(
-            30, 30, kernel_size=3, padding=1
-        )
+        self.enc2_conv2 = nn.Conv2d( 30, 30, kernel_size=3, padding=1)
 
         self.pool2 = nn.MaxPool2d(2)
 
         # 64 x 64 x 30
 
 
-        self.enc3_conv1 = nn.Conv2d(
-            30, 60, kernel_size=3, padding=1
-        )
+        self.enc3_conv1 = nn.Conv2d(30, 60, kernel_size=3, padding=1)
 
-        self.enc3_conv2 = nn.Conv2d(
-            60, 60, kernel_size=3, padding=1
-        )
+        self.enc3_conv2 = nn.Conv2d(60, 60, kernel_size=3, padding=1)
 
         self.pool3 = nn.MaxPool2d(2)
 
@@ -52,9 +39,7 @@ class PaperUNet(nn.Module):
         # BOTTLENECK
         # ============================================================
 
-        self.bottleneck = nn.Conv2d(
-            60, 60, kernel_size=3, padding=1
-        )
+        self.bottleneck = nn.Conv2d(60, 60, kernel_size=3, padding=1)
 
         # ============================================================
         # DECODER
@@ -66,15 +51,9 @@ class PaperUNet(nn.Module):
         # -> 64 x 64 x 60
         # ------------------------------------------------------------
 
-        self.dec1_conv = nn.Conv2d(
-            60, 60, kernel_size=3, padding=1
-        )
+        self.dec1_conv = nn.Conv2d(60, 60, kernel_size=3, padding=1)
 
-        self.up1 = nn.ConvTranspose2d(
-            60, 60,
-            kernel_size=2,
-            stride=2
-        )
+        self.up1 = nn.ConvTranspose2d(60, 60,kernel_size=2,stride=2)
 
         # ------------------------------------------------------------
         # Decoder stage 2
@@ -84,15 +63,9 @@ class PaperUNet(nn.Module):
         # -> 128 x 128 x 30
         # ------------------------------------------------------------
 
-        self.dec2_conv = nn.Conv2d(
-            60, 30, kernel_size=3, padding=1
-        )
+        self.dec2_conv = nn.Conv2d(60, 30, kernel_size=3, padding=1)
 
-        self.up2 = nn.ConvTranspose2d(
-            30, 30,
-            kernel_size=2,
-            stride=2
-        )
+        self.up2 = nn.ConvTranspose2d(30, 30,kernel_size=2,stride=2)
 
         # ------------------------------------------------------------
         # Decoder stage 3
@@ -102,25 +75,15 @@ class PaperUNet(nn.Module):
         # -> 256 x 256 x 15
         # ------------------------------------------------------------
 
-        self.dec3_conv = nn.Conv2d(
-            30, 15, kernel_size=3, padding=1
-        )
+        self.dec3_conv = nn.Conv2d(30, 15, kernel_size=3, padding=1)
 
-        self.up3 = nn.ConvTranspose2d(
-            15, 15,
-            kernel_size=2,
-            stride=2
-        )
+        self.up3 = nn.ConvTranspose2d(15, 15,kernel_size=2,stride=2)
 
         # ============================================================
         # OUTPUT
         # ============================================================
 
-        self.output = nn.Conv2d(
-            15, 1,
-            kernel_size=3,
-            padding=1
-        )
+        self.output = nn.Conv2d(15, 1,kernel_size=3,padding=1)
 
         self.sigmoid = nn.Sigmoid()
 
